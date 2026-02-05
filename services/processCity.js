@@ -1,7 +1,9 @@
-//const City = require('../models/City');
+const lawsChoosing = require("./lawsChoosing");
 
-async function processAllCities() {
-  //const city = await City.find();
+async function processCity() {
+  lawsToContribute = await lawsChoosing();
+
+  
 }
 
-module.exports = processAllCities;
+module.exports = processCity;

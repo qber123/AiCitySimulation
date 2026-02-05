@@ -1,6 +1,6 @@
 const processCity = require('./services/processCity');
 
-const HOUR = 10 * 1000;
+const HOUR = 60 * 1000;
 
 function startTick() {
   console.log("City tick started");
