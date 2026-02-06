@@ -1,6 +1,6 @@
 const processCity = require('./services/processCity');
 
-const HOUR = 60 * 1000;
+const TIME_GAP = 24 * 60 * 60 * 1000;
 
 function startTick() {
   console.log("City tick started");
@@ -12,7 +12,7 @@ function startTick() {
     } catch (e) {
       console.error("Tick error", e);
     }
-  }, HOUR);
+  }, TIME_GAP);
 }
 
 module.exports = startTick;

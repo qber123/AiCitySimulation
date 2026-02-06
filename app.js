@@ -6,6 +6,7 @@ var cookieParser = require('cookie-parser');
 require('dotenv').config();
 
 var startTick = require('./tick');
+var ensureCityExists = require('./services/ensureCityExist');
 
 var authRouter = require('./routes/auth');
 var lawsRouter = require('./routes/laws');
@@ -23,6 +24,7 @@ mongoose.connect(
 )
 .then(() => {
   console.log('MongoDB connected');
+  ensureCityExists();
   startTick();
 })
 .catch(err => console.error(err));
