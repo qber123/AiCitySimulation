@@ -6,6 +6,7 @@ const processCity = require("../services/processCity");
 const User = require("../models/User");
 const Law = require("../models/Law");
 const Vote = require("../models/Vote");
+const City = require('../models/City');
 
 router.post("/end", async function (req, res) {
     await processCity();
@@ -16,7 +17,6 @@ router.post("/end", async function (req, res) {
 router.post("/propose", requireAuth, async function (req, res) {
     const { law } = req.body;
     const userId = req.user._id;
-    //console.log(req);
 
     if (!userId) {
         return res.status(401).json({message: "User is unauthorize"});
@@ -56,15 +56,15 @@ router.post("/:lawId/vote", requireAuth, async function (req, res) {
         return res.status(404).json({message: "There is no law with this id"});
     }
 
-    // if (lawToVote.proposedBy == userId) {
-    //     return res.status(400).json({message: "You cannot vote for you'r own law"});
-    // }
+    if (lawToVote.proposedBy == userId) {
+        return res.status(400).json({message: "You cannot vote for you'r own law"});
+    }
 
-    // existingVote = await Vote.findOne({userId: userId});
+    existingVote = await Vote.findOne({userId: userId});
 
-    // if (existingVote) {
-    //     return res.status(409).json({message: "You already voted"});
-    // }
+    if (existingVote) {
+        return res.status(409).json({message: "You already voted"});
+    }
 
     try {
         const vote = await Vote.create({userId, lawId});
@@ -74,5 +74,15 @@ router.post("/:lawId/vote", requireAuth, async function (req, res) {
         return res.status(500).json({ message: "Internal server error" });
     }
 });
+
+router.get("/getCityInfo", async function (req, res) {
+    return res.status(200).json(await City.findOne());
+});
+
+router.get("/getLaws", async function (req, res){
+    return res.status(200).json(await Law.find());
+});
+
+
 
 module.exports = router;

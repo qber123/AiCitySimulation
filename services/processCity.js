@@ -1,6 +1,8 @@
 const OpenAI = require("openai");
 
 const City = require("../models/City");
+const Law = require("../models/Law");
+const Vote = require("../models/Vote");
 
 const lawsChoosing = require("./lawsChoosing");
 
